@@ -1,0 +1,23 @@
+include variables.pug
+include mixins.pug
+
+block config
+  - var myName = 'Nikolay'
+  - var myAge = 36
+
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    block head
+  body
+    .container
+    .banner
+      div банер на всех страницанамаз
+    .content
+      block content
+        h1 Некий заголовок
+
+    aside.aside 
+      block aside

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Тестовое задание</title>
+  <link rel="stylesheet" href="css/style.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <div class="wrap">
+
+    <div class="promo">
+      <h1>Тестовое задание</h1>
+      <h2>Сверстать календарик своими силами</h2>
+      <p>Ниже представленно два календарика:</p>
+    </div>
+
+  <div class="wrap-calendar__without-js">
+ 
+  <div class="calendar">
+  <table>
+    <a href="" class="arrow left"> < </a><span class="month">Август 2018</span><a href="" class="arrow right"> > </a>
+    <tr class="days">
+      <td>Пн</td>
+      <td>Вт</td>
+      <td>Ср</td>
+      <td>Чт</td>
+      <td>Пт</td>
+      <td>Сб</td>
+      <td>Вс</td>
+    </tr>
+    <tr>
+      <td class="day"><a class="weekday another" href="">30</a></td>
+      <td class="day"><a class="weekday another" href="">31</a></td>
+      <td class="day"><a class="weekday" href="">1</a></td>
+      <td class="day"><a class="weekday" href="">2</a></td>
+      <td class="day"><a class="weekday" href="">3</a></td>
+      <td class="day"><a class="weekend" href="">4</a></td>
+      <td class="day"><a class="weekend" href="">5</a></td>
+    </tr>
+    <tr>
+      <td class="day"><a href="">6</a></td>
+      <td class="day"><a href="">7</a></td>
+      <td class="day"><a href="">8</a></td>
+      <td class="day"><a href="">9</a></td>
+      <td class="day"><a href="">10</a></td>
+      <td class="day"><a class="weekend" href="">11</a></td>
+      <td class="day"><a class="weekend" href="">12</a></td>
+    </tr>
+    <tr>
+      <td class="day"><a href="">13</a></td>
+      <td class="day"><a href="">14</a></td>
+      <td class="day"><a href="">15</a></td>
+      <td class="day"><a href="">16</a></td>
+      <td class="day"><a href="">17</a></td>
+      <td class="day"><a class="weekend" href="">18</a></td>
+      <td class="day"><a class="weekend" href="">19</a></td>
+    </tr>
+    <tr>
+      <td class="day"><a href="">20</a></td>
+      <td class="day"><a href="">21</a></td>
+      <td class="day"><a href="">22</a></td>
+      <td class="day"><a href="">23</a></td>
+      <td class="day"><a href="">24</a></td>
+      <td class="day"><a class="weekend" href="">25</a></td>
+      <td class="day"><a class="weekend" href="">26</a></td>
+    </tr>
+    <tr>
+      <td class="day"><a href="">27</a></td>
+      <td class="day"><a href="">28</a></td>
+      <td class="day"><a href="">29</a></td>
+      <td class="day"><a href="">30</a></td>
+      <td class="day"><a href="">31</a></td>
+      <td class="day"><a class="weekend another" href="">1</a></td>
+      <td class="day"><a class="weekend another" href="">2</a></td>
+    </tr>
+    
+  </table>
+</div>
+
+<div class="calendar-description">
+  <h4>Без JS. Чистый HTML и CSS. </h4>
+
+  <p>Полностью сделано своими силами. Хотелось, чтобы календарик снизу выглядел именно так. Но там есть баги.</p>
+  </div>
+</div>
+
+<div class="wrap-calendar__with-js">
+
+
+<div class="calendar">
+
+<table id="calendar"  >
+  <thead>
+    <tr><td><b>‹</b><td colspan="5"><td><b>›</b>
+    <tr><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
+  </thead>
+  <tbody></tbody>
+</table>
+
+</div>
+
+<script>
+function calendar(id, year, month) {
+var Dlast = new Date(year,month+1,0).getDate(),
+    D = new Date(year,month,Dlast),
+    DNlast = new Date(D.getFullYear(),D.getMonth(),Dlast).getDay(),
+    DNfirst = new Date(D.getFullYear(),D.getMonth(),1).getDay(),
+    calendar = '<tr>',
+    month=["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
+if (DNfirst != 0) {
+  for(var  i = 1; i < DNfirst; i++) calendar += '<td>';
+}else{
+  for(var  i = 0; i < 6; i++) calendar += '<td>';
+}
+for(var  i = 1; i <= Dlast; i++) {
+  if (i == new Date().getDate() && D.getFullYear() == new Date().getFullYear() && D.getMonth() == new Date().getMonth()) {
+    calendar += '<td class="today">' + i;
+  }else{
+    calendar += '<td>' + i;
+  }
+  if (new Date(D.getFullYear(),D.getMonth(),i).getDay() == 0) {
+    calendar += '<tr>';
+  }
+}
+for(var  i = DNlast; i < 7; i++) calendar += '<td> ';
+document.querySelector('#'+id+' tbody').innerHTML = calendar;
+document.querySelector('#'+id+' thead td:nth-child(2)').innerHTML = month[D.getMonth()] +' '+ D.getFullYear();
+document.querySelector('#'+id+' thead td:nth-child(2)').dataset.month = D.getMonth();
+document.querySelector('#'+id+' thead td:nth-child(2)').dataset.year = D.getFullYear();
+if (document.querySelectorAll('#'+id+' tbody tr').length < 6) {
+    document.querySelector('#'+id+' tbody').innerHTML += '<tr><td> <td> <td> <td> <td> <td> <td> ';
+}
+}
+calendar("calendar", new Date().getFullYear(), new Date().getMonth());
+
+document.querySelector('#calendar thead tr:nth-child(1) td:nth-child(1)').onclick = function() {
+  calendar("calendar", document.querySelector('#calendar thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead td:nth-child(2)').dataset.month)-1);
+}
+
+document.querySelector('#calendar thead tr:nth-child(1) td:nth-child(3)').onclick = function() {
+  calendar("calendar", document.querySelector('#calendar thead td:nth-child(2)').dataset.year, parseFloat(document.querySelector('#calendar thead td:nth-child(2)').dataset.month)+1);
+}
+</script>
+
+<div class="calendar-description">
+  <h4>Собран на JS. </h4>
+  
+  <p><s>Честно говоря, JS украден.</s></p> 
+  <p> Недель я поставила 6, потому что бывают месяца в которых 1-ое число выпадает на «СБ», а 31-ое на «ПН». Тогда отображается 6 недель. Но тогда при наведении <i>background-color</i> в пустых клетках подсвечивается. Намеример, когда Декабрь 2018 года.</p>
+  </div>
+
+</div>
+<div class="promo-end">
+      <p>Конечно, чтобы выполнить это задание от начала до конца мне потребуются более широкие и глубокие знания в JS, но я готова учиться и осваивать его. </p>  
+      <p>И буду:)</p>
+      <span>Спасибо за просмотр!</span>
+    </div>
+</div>
+</div>
+</body>
+</html>
